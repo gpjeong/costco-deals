@@ -20,20 +20,20 @@ export default function CategorySummary({
   });
 
   return (
-    <div className="flex gap-2 overflow-x-auto pt-3.5 pb-1 scrollbar-hide">
+    <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pt-3 sm:pt-3.5 pb-1 scrollbar-hide">
       {/* 전체 할인 개수 */}
       <div
         onClick={() => onCategorySelect("전체")}
-        className={`flex-shrink-0 rounded-xl px-4 py-2.5 text-center min-w-[100px] cursor-pointer transition-all ${
+        className={`flex-shrink-0 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-center min-w-[72px] sm:min-w-[100px] cursor-pointer transition-all ${
           selectedCategory === "전체"
             ? "bg-[#FFF5F7] dark:bg-[#2A1A1E] border-[1.5px] border-costco-red"
             : "bg-white dark:bg-[#1E1E1E] border border-[#F0F0F0] dark:border-[#333]"
         }`}
       >
-        <div className="text-[22px] font-extrabold text-costco-red dark:text-[#FF6B6B]">
+        <div className="text-lg sm:text-[22px] font-extrabold text-costco-red dark:text-[#FF6B6B]">
           {products.length}
         </div>
-        <div className="text-[13px] text-[#999] dark:text-[#888] font-semibold">
+        <div className="text-[11px] sm:text-[13px] text-[#999] dark:text-[#888] font-semibold">
           전체 할인
         </div>
       </div>
@@ -47,16 +47,16 @@ export default function CategorySummary({
             <div
               key={cat}
               onClick={() => onCategorySelect(cat as Category)}
-              className={`flex-shrink-0 rounded-xl px-4 py-2.5 text-center cursor-pointer min-w-[80px] transition-all ${
+              className={`flex-shrink-0 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-center cursor-pointer min-w-[60px] sm:min-w-[80px] transition-all ${
                 isSelected
                   ? "bg-[#FFF5F7] border-[1.5px] border-costco-red"
                   : "bg-white dark:bg-[#1E1E1E] border border-[#F0F0F0] dark:border-[#333]"
               }`}
             >
-              <div className="text-[22px] font-extrabold text-[#222] dark:text-[#E8E8E8]">
+              <div className="text-lg sm:text-[22px] font-extrabold text-[#222] dark:text-[#E8E8E8]">
                 {count}
               </div>
-              <div className="text-[13px] text-[#999] dark:text-[#888] font-semibold">
+              <div className="text-[11px] sm:text-[13px] text-[#999] dark:text-[#888] font-semibold whitespace-nowrap">
                 {cat}
               </div>
             </div>

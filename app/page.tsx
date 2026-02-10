@@ -152,7 +152,7 @@ export default function HomePage() {
       />
 
       {/* Header 내부 컨텐츠 (주차 네비게이션 + 검색바) */}
-      <div className="sticky top-0 z-40 bg-gradient-to-r from-[#005DAA] to-[#003F7D] dark:from-[#0A1628] dark:to-[#162544] px-4 pb-4">
+      <div className="sticky top-0 z-40 bg-gradient-to-r from-[#005DAA] to-[#003F7D] dark:from-[#0A1628] dark:to-[#162544] px-3 sm:px-4 pb-2.5 sm:pb-4">
         <div className="max-w-[960px] mx-auto">
           <WeekNavigation
             weekOffset={weekOffset}

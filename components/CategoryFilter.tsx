@@ -19,11 +19,11 @@ export default function CategoryFilter({
   favoritesCount,
 }: CategoryFilterProps) {
   return (
-    <div className="flex gap-2 overflow-x-auto py-2.5 scrollbar-hide">
+    <div className="flex gap-1.5 sm:gap-2 overflow-x-auto py-2 sm:py-2.5 scrollbar-hide">
       {/* 찜 필터 */}
       <button
         onClick={onToggleFavorites}
-        className={`flex-shrink-0 px-4 py-2 rounded-full border-2 text-sm font-medium transition-all ${
+        className={`flex-shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border-2 text-xs sm:text-sm font-medium transition-all ${
           showFavoritesOnly
             ? "border-costco-red bg-[#FFF0F3] text-costco-red font-bold"
             : "border-[#DDD] dark:border-[#444] bg-white dark:bg-[#2A2A2A] text-[#555] dark:text-[#CCC]"
@@ -33,12 +33,12 @@ export default function CategoryFilter({
       </button>
 
       {/* 구분선 */}
-      <div className="flex-shrink-0 w-px h-6 bg-[#F0F0F0] dark:bg-[#333] self-center" />
+      <div className="flex-shrink-0 w-px h-5 sm:h-6 bg-[#F0F0F0] dark:bg-[#333] self-center" />
 
       {/* 전체 */}
       <button
         onClick={() => onCategorySelect("전체")}
-        className={`flex-shrink-0 px-4 py-2 rounded-full border-2 text-sm transition-all ${
+        className={`flex-shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border-2 text-xs sm:text-sm transition-all ${
           selectedCategory === "전체"
             ? "border-costco-red bg-costco-red text-white font-bold"
             : "border-[#DDD] dark:border-[#444] bg-white dark:bg-[#2A2A2A] text-[#555] dark:text-[#CCC] font-medium"
@@ -52,7 +52,7 @@ export default function CategoryFilter({
         <button
           key={cat}
           onClick={() => onCategorySelect(cat)}
-          className={`flex-shrink-0 px-4 py-2 rounded-full border-2 text-sm transition-all ${
+          className={`flex-shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border-2 text-xs sm:text-sm transition-all ${
             selectedCategory === cat
               ? "border-costco-red bg-costco-red text-white font-bold"
               : "border-[#DDD] dark:border-[#444] bg-white dark:bg-[#2A2A2A] text-[#555] dark:text-[#CCC] font-medium"
