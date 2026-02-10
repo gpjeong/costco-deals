@@ -1,0 +1,79 @@
+name: Weekly Costco Scraper
+
+on:
+  # 매주 월요일 00:00 UTC (KST 09:00)
+  schedule:
+    - cron: '0 0 * * 1'
+
+  # 수동 실행 가능
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run scraper
+        id: scrape
+        run: npm run scrape
+        continue-on-error: true
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --exit-code data/weeks/ || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changed
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          WEEK_ID=$(ls -t data/weeks/*.json | head -1 | xargs basename | sed 's/.json//')
+          git add data/weeks/*.json public/data/weeks/*.json
+          git commit -m "data: update weekly deals $WEEK_ID"
+          git push
+
+      - name: Create issue on failure
+        if: steps.scrape.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `[자동] 크롤링 실패 - ${new Date().toISOString().split('T')[0]}`;
+            const body = `
+            ## 크롤링 실패
+
+            **날짜**: ${new Date().toISOString()}
+            **워크플로우**: [${context.workflow}](${context.payload.repository.html_url}/actions/runs/${context.runId})
+
+            ### 조치 사항
+            1. 워크플로우 로그 확인
+            2. 코스트코 사이트 구조 변경 여부 확인
+            3. 크롤러 코드 수정 필요 시 \`scraper/\` 디렉토리 확인
+
+            ### 로그
+            [워크플로우 실행 로그 보기](${context.payload.repository.html_url}/actions/runs/${context.runId})
+            `;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body,
+              labels: ['bug', 'automated', 'scraper'],
+            });

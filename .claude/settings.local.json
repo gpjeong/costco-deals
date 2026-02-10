@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(export:*)",
+      "Bash([ -s \"$NVM_DIR/nvm.sh\" ])",
+      "Bash(. \"$NVM_DIR/nvm.sh\")",
+      "Bash(nvm list:*)",
+      "Bash(npx create-next-app@14:*)",
+      "Bash(nvm use:*)",
+      "Bash(pkill:*)",
+      "Bash(npx next dev -p 3001)",
+      "Bash(npx playwright install:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(source:*)",
+      "Bash(npx vitest run:*)",
+      "WebSearch",
+      "WebFetch(domain:upload.wikimedia.org)",
+      "WebFetch(domain:www.logo.wine)",
+      "WebFetch(domain:www.stickpng.com)",
+      "WebFetch(domain:1000logos.net)",
+      "WebFetch(domain:freebiesupply.com)",
+      "WebFetch(domain:brandslogos.com)",
+      "Bash(npx next build)",
+      "Bash(npx serve out -l 3001)",
+      "Bash(curl:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)",
+      "Bash(git init:*)",
+      "Bash(gh auth status:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
