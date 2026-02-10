@@ -14,12 +14,18 @@ export default function WeekNavigation({
   endDate,
 }: WeekNavigationProps) {
   const isCurrentWeek = weekOffset === 0;
+  const isOldestWeek = weekOffset <= -3;
 
   return (
     <div className="flex items-center justify-between bg-white/15 rounded-xl px-2.5 sm:px-3.5 py-2 sm:py-2.5 mb-2 sm:mb-3">
       <button
-        onClick={() => onWeekChange(-1)}
-        className="bg-white/20 border-none text-white rounded-lg px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-base font-bold cursor-pointer hover:bg-white/30 transition-colors whitespace-nowrap"
+        onClick={() => onWeekChange(weekOffset - 1)}
+        disabled={isOldestWeek}
+        className={`border-none text-white rounded-lg px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-base font-bold transition-colors whitespace-nowrap ${
+          isOldestWeek
+            ? "bg-white/10 text-white/40 cursor-default"
+            : "bg-white/20 cursor-pointer hover:bg-white/30"
+        }`}
       >
         ◀ 지난주
       </button>
@@ -36,7 +42,7 @@ export default function WeekNavigation({
       </div>
 
       <button
-        onClick={() => onWeekChange(0)}
+        onClick={() => onWeekChange(weekOffset + 1)}
         disabled={isCurrentWeek}
         className={`border-none text-white rounded-lg px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-base font-bold transition-colors whitespace-nowrap ${
           isCurrentWeek
