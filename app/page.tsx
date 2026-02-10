@@ -39,27 +39,31 @@ export default function HomePage() {
       setLoading(true);
       try {
         const weekId = getWeekIdWithOffset(weekOffset);
-        // SSG 환경에서는 public 폴더가 아닌 data 폴더에서 직접 import
+        const dates = getWeekDates(weekId);
         const response = await fetch(`/data/weeks/${weekId}.json`);
 
         if (!response.ok) {
-          // 현재 주차 데이터로 폴백
-          const currentWeekId = getWeekIdWithOffset(0);
-          const fallbackResponse = await fetch(`/data/weeks/${currentWeekId}.json`);
-          const data = await fallbackResponse.json();
-          setWeekData(data);
+          // 데이터 없는 주차: 빈 상태로 표시
+          setWeekData({
+            weekId,
+            startDate: dates.startDate,
+            endDate: dates.endDate,
+            scrapedAt: "",
+            products: [],
+          });
         } else {
           const data = await response.json();
           setWeekData(data);
         }
       } catch (error) {
         console.error("Failed to load week data:", error);
-        // 에러 시 빈 데이터
+        const weekId = getWeekIdWithOffset(weekOffset);
+        const dates = getWeekDates(weekId);
         setWeekData({
-          weekId: getWeekIdWithOffset(weekOffset),
-          startDate: "",
-          endDate: "",
-          scrapedAt: new Date().toISOString(),
+          weekId,
+          startDate: dates.startDate,
+          endDate: dates.endDate,
+          scrapedAt: "",
           products: [],
         });
       } finally {
@@ -209,6 +213,12 @@ export default function HomePage() {
                 cartItemNames={cartItemNames}
                 onToggleFavorite={toggleFavorite}
                 onAddToCart={(product) => addItem(product.name, true, product)}
+              />
+            ) : weekData && weekData.products.length === 0 ? (
+              <EmptyState
+                icon="📭"
+                title="이 주차의 할인 데이터가 없어요"
+                description="아직 크롤링되지 않았거나 할인이 없는 주차예요"
               />
             ) : (
               <EmptyState
