@@ -42,6 +42,10 @@ export interface CartItem {
   text: string;
   checked: boolean;
   fromProduct: boolean;
+  imageUrl?: string;
+  salePrice?: number;
+  originalPrice?: number;
+  discountAmount?: number;
 }
 
 export interface SortOption {

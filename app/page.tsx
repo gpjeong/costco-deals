@@ -208,7 +208,7 @@ export default function HomePage() {
                 favorites={favorites}
                 cartItemNames={cartItemNames}
                 onToggleFavorite={toggleFavorite}
-                onAddToCart={(name) => addItem(name, true)}
+                onAddToCart={(product) => addItem(product.name, true, product)}
               />
             ) : (
               <EmptyState

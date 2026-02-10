@@ -2,7 +2,7 @@
 
 import { useLocalStorage } from "./useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/constants";
-import { CartItem } from "@/lib/types";
+import { CartItem, Product } from "@/lib/types";
 
 /**
  * 장바구니 관리 훅
@@ -13,9 +13,8 @@ export function useCart() {
     []
   );
 
-  const addItem = (text: string, fromProduct: boolean = false) => {
+  const addItem = (text: string, fromProduct: boolean = false, product?: Product) => {
     setItems((prev) => {
-      // 이미 존재하는 항목인지 확인
       if (prev.some((item) => item.text === text)) {
         return prev;
       }
@@ -26,6 +25,10 @@ export function useCart() {
           text,
           checked: false,
           fromProduct,
+          imageUrl: product?.imageUrl,
+          salePrice: product?.salePrice,
+          originalPrice: product?.originalPrice,
+          discountAmount: product?.discountAmount,
         },
       ];
     });

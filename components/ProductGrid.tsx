@@ -11,7 +11,7 @@ interface ProductGridProps {
   favorites: string[];
   cartItemNames: string[];
   onToggleFavorite: (id: string) => void;
-  onAddToCart: (name: string) => void;
+  onAddToCart: (product: Product) => void;
 }
 
 export default function ProductGrid({

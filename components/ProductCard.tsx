@@ -9,7 +9,7 @@ interface ProductCardProps {
   isFavorite: boolean;
   isInCart: boolean;
   onToggleFavorite: (id: string) => void;
-  onAddToCart: (name: string) => void;
+  onAddToCart: (product: Product) => void;
 }
 
 export default function ProductCard({
@@ -139,7 +139,7 @@ export default function ProductCard({
         {/* 장바구니 추가 버튼 */}
         <div className="mt-auto" />
         <button
-          onClick={() => onAddToCart(product.name)}
+          onClick={() => onAddToCart(product)}
           disabled={isInCart}
           className={`w-full mt-2.5 py-2.5 rounded-[10px] border-none text-sm font-bold transition-all ${
             isInCart
