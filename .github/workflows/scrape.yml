@@ -33,10 +33,23 @@ jobs:
         run: npm run scrape
         continue-on-error: true
 
+      - name: Clean up old data (keep last 4 weeks)
+        run: |
+          cd data/weeks
+          FILE_COUNT=$(ls -1 *.json 2>/dev/null | wc -l)
+          if [ "$FILE_COUNT" -gt 4 ]; then
+            ls -1 *.json | sort | head -n -4 | while read f; do
+              rm "$f"
+              # public 쪽도 삭제
+              rm -f "../../public/data/weeks/$f"
+            done
+          fi
+
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code data/weeks/ || echo "changed=true" >> $GITHUB_OUTPUT
+          git add -A data/weeks/ public/data/weeks/
+          git diff --cached --exit-code data/weeks/ public/data/weeks/ || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Commit and push if changed
         if: steps.git-check.outputs.changed == 'true'
@@ -45,7 +58,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           WEEK_ID=$(ls -t data/weeks/*.json | head -1 | xargs basename | sed 's/.json//')
-          git add data/weeks/*.json public/data/weeks/*.json
+          git add -A data/weeks/ public/data/weeks/
           git commit -m "data: update weekly deals $WEEK_ID"
           git push
 
